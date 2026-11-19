@@ -145,7 +145,8 @@ class Bakery:
         path = self.path
         if path in FILES:
             name, media = FILES[path]
-            return self.reply(200, (ROOT / "public" / name).read_bytes(), media)
+            directory = "local" if name in {"community.html", "app.js"} else "docs"
+            return self.reply(200, (ROOT / directory / name).read_bytes(), media)
         with closing(connect()) as db:
             if path == "/api/account":
                 user = self.session_user(db)
