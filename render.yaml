@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: dongne-oven-bakery
+    runtime: python
+    plan: starter
+    buildCommand: python -m pip install -r requirements.txt
+    startCommand: python server.py
+    healthCheckPath: /api/account
+    disk:
+      name: bakery-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: BAKERY_DB
+        value: /var/data/community.sqlite3
+      - key: BAKERY_HTTPS
+        value: "1"
